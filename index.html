@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trung Hai</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #game-container {
+            background-color: #e0f7fa; /* Màu nền nhạt cho khu vực trò chơi */
+            padding: 20px;
+            border: 1px solid #00796b; /* Đường viền xung quanh khu vực trò chơi */
+            margin: 20px auto; /* Căn giữa khu vực trò chơi */
+            width: 80%; /* Chiều rộng của khu vực trò chơi */
+        }
+        #game {
+            text-align: center;
+        }
+        #word-display {
+            font-size: 2em;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Trung Hai</h1>
+        <p>Trân béo</p>
+    </header>
+    
+    <section id="rafael-nadal">
+        <h2>Rafael Nadal</h2>
+        <!-- Thêm thông tin về Rafael Nadal ở đây -->
+    </section>
+    
+    <section id="game-container">
+        <h1>Trò Chơi Đoán Chữ</h1>
+        <div id="game">
+            <p id="word-display"></p>
+            <p>Nhập một chữ cái:</p>
+            <input type="text" id="guess-input" maxlength="1">
+            <button onclick="makeGuess()">Đoán</button>
+            <p id="message"></p>
+            <p>Chữ cái đã đoán: <span id="guessed-letters"></span></p>
+        </div>
+    </section>
+    
+    <footer>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Rick Roll</a>
+    </footer>
+
+    <script>
+        const words = ["nadal", "djokovic", "trung hai", "thuy", "shit", "beo nhu lon"];
+        let chosenWord = words[Math.floor(Math.random() * words.length)];
+        let guessedLetters = [];
+        let wordDisplay = document.getElementById('word-display');
+        let message = document.getElementById('message');
+        let guessedLettersDisplay = document.getElementById('guessed-letters');
+
+        function updateWordDisplay() {
+            wordDisplay.innerHTML = chosenWord.split('').map(letter => 
+                guessedLetters.includes(letter) || letter === ' ' ? letter : '_'
+            ).join(' ');
+        }
+
+        function makeGuess() {
+            let guessInput = document.getElementById('guess-input');
+            let guess = guessInput.value.toLowerCase();
+            guessInput.value = '';
+
+            if (guess && !guessedLetters.includes(guess)) {
+                guessedLetters.push(guess);
+                updateWordDisplay();
+                guessedLettersDisplay.innerHTML = guessedLetters.join(', ');
+
+                if (chosenWord.includes(guess)) {
+                    if (!wordDisplay.innerHTML.includes('_')) {
+                        message.innerHTML = 'Chúc mừng! Bạn đã đoán đúng từ.';
+                    }
+                } else {
+                    message.innerHTML = 'Chữ cái không có trong từ. Thử lại!';
+                }
+            }
+        }
+
+        updateWordDisplay();
+    </script>
+</body>
+</html>
